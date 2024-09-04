@@ -18,43 +18,28 @@ const server = http.createServer((req, res) => {
   const { pathname, query } = urlParsed;
   const { method } = req;
   res.setHeader('Content-Type', 'text/html; charset=utf-8;')
-  res.write("<h1>Погода</h1>")
-  res.write(getFormCreateComponent())
-
   if (pathname === '/do') {
     if (method === 'POST') {
       let body = [];
+      console.log('loading')
       req
         .on('data', (chunk) => {
           body.push(chunk)
         })
         .on('end', () => {
-          //body = Buffer.concat(body).toString().split('=')[1];
+          body = Buffer.concat(body).toString().split('=')[1];
           console.log(body)
         });
-
-      res.statusCode = 302;
-      res.setHeader('Location', '/');
     }
   }
-
+  else {
+    res.write("<h1>Погода</h1>")
+    res.write(getFormCreateComponent())
+  }
+  res.statusCode = 302;  
+  res.setHeader('Location', '/');
   res.end()
 });
-// http.get(url, (res) => {
-//   const {statusCode} = res
-//     if (statusCode !== 200){
-//         console.log(`statusCode: ${statusCode}`)
-//         return
-//     }
-
-//     res.setEncoding('utf8')
-//     let rowData = ''
-//     res.on('data', (chunk) => rowData += chunk)
-//     res.on('end', () => {
-//         let parseData = JSON.parse(rowData)
-//         console.log(parseData)
-//     })
-// })
 
 const PORT = process.env.PORT || 3000;
 server.listen(PORT);

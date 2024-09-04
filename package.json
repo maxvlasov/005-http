@@ -12,5 +12,8 @@
   "license": "ISC",
   "devDependencies": {
     "dotenv": "^16.4.5"
+  },
+  "dependencies": {
+    "uuid": "^10.0.0"
   }
 }
